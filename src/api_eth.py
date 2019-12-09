@@ -4,8 +4,17 @@
 """
 from web3 import Web3, HTTPProvider
 import requests
-import web3
 import json
+
+
+def data_handle(data, max_len):
+    len_data = len(data)
+    if len_data > max_len:
+        return {'error': 'string too long'}
+    else:
+        out_bytes = data.ljust(max_len, '0')
+        out_bytes = bytes(out_bytes, 'utf-8')
+        return {'data': out_bytes}
 
 
 def post_method(url, method, params):
@@ -82,7 +91,7 @@ class Eth():
         :param password: 密码
         :return: 地址及私钥
         """
-        w3 = web3.Web3()
+        w3 = Web3()
         account = w3.eth.account.create(password)
         address = account.address
         private_key = account.privateKey.hex()
@@ -138,38 +147,71 @@ class Eth():
 
     def contract_data_upload(self, abi_location, byte_location, address, password):
         """
-        调用上传数据智能合约，上传数据
+        上传智能合约记住先挖矿
         :param abi_location: 智能合约abi.json文件路径
         :param byte_location:  智能合约bin.json文件路径
         :param address: 节点账户地址
         :param password: 节点密码
-        :return:合约交易地址
+        :return:合约地址
         """
         try:
             w3 = Web3(HTTPProvider(self.url))
             with open(abi_location, 'r') as abi_definition:
-                abi = json.load(abi_definition)
+                abi = abi_definition.read()
+            abi = abi.replace('\'', '\"')
+            abi = json.loads(abi)
             with open(byte_location, 'r') as bytecode_definition:
-                bytecode = '0x' + json.load(bytecode_definition)["object"]
+                bytecode = json.load(bytecode_definition)["object"]
             all_account = w3.eth.accounts
-            if address in all_account:
-                w3.eth.defaultAccount = w3.eth.accounts[all_account.index(address)]
+            all_account_ = [str(i).upper() for i in all_account]
+            if str(address).upper() in all_account_:
+                w3.eth.defaultAccount = w3.eth.accounts[all_account_.index(str(address).upper())]
                 result = post_method(self.url, 'personal_unlockAccount', [address, password])
                 if 'result' in result:
                     Greeter = w3.eth.contract(abi=abi, bytecode=bytecode)
                     tx_hash = Greeter.constructor().transact()
                     tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
-                    greeter = w3.eth.contract(
-                        address=tx_receipt.contractAddress,
-                        abi=abi
-                    )
-                    tx_receipt_ = str(tx_receipt)
-                    return {'tx_hash': tx_receipt_[
-                                       tx_receipt_.find("'transactionHash': HexBytes(") + 28:tx_receipt_.find(
-                                           "), 'transactionIndex'")]}
+                    return {'tx_hash': str(tx_receipt.contractAddress)}
                 else:
                     return {"error": "unlock account fail"}
             else:
                 return {'error': 'address not in ETH'}
         except Exception as e:
             return {'error': str(e)}
+
+    def use_contract_example(self, abi_location, contract_address, address, password, data_input):
+        """
+        基于https://web3py.readthedocs.io/en/stable/contracts.html提供的智能合约来测试
+        :param abi_location: 智能合约abi.json文件路径
+        :param contract_address:智能合约地址
+        :param address:账户
+        :param password:密码
+        :param data_input:用户提交的字符串
+        :return:结果（成功返回交易地址，及结果）
+        """
+        w3 = Web3(HTTPProvider(self.url))
+        with open(abi_location, 'r') as abi_definition:
+            abi = abi_definition.read()
+        abi = abi.replace('\'', '\"')
+        abi = json.loads(abi)
+        all_account = w3.eth.accounts
+        all_account_ = [str(i).upper() for i in all_account]
+        if str(address).upper() in all_account_:
+            w3.eth.defaultAccount = w3.eth.accounts[all_account_.index(str(address).upper())]
+            result = post_method(self.url, 'personal_unlockAccount', [address, password])
+            if 'result' in result:
+                contract = w3.eth.contract(
+                    address=contract_address,
+                    abi=abi)
+                # # update the greeting
+                tx_hash = contract.functions.setGreeting(data_input).transact()
+                # # Wait for transaction to be mined...
+                w3.eth.waitForTransactionReceipt(tx_hash)
+                greet_result = contract.functions.greet().call()
+                return {"greet_result": greet_result, 'tx_hash': tx_hash}
+
+            else:
+                return {"error": "unlock account fail"}
+        else:
+            return {'error': 'address not in ETH'}
+# {'greet_result': '1234', 'tx_hash': HexBytes('0xeb445a55c200f3c722cd908cd87f0b224e52d1f08cfadd1a78f0ccfda403c103')}
