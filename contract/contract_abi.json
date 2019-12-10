@@ -1,23 +1,5 @@
 [
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "name",
-				"type": "string"
-			},
-			{
-				"name": "imageLink",
-				"type": "string"
-			}
-		],
-		"name": "upload",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"constant": true,
 		"inputs": [
 			{
@@ -46,6 +28,33 @@
 		],
 		"payable": false,
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"name": "name",
+				"type": "string"
+			},
+			{
+				"name": "imageLink",
+				"type": "string"
+			}
+		],
+		"name": "upload",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{

@@ -18,7 +18,7 @@ def match(file_path, Bytes=1024):
     :param Bytes:只读取固定字节
     :return:名字和文件哈希
     """
-    (file_path, filename) = os.path.split(file_path)
+    (file_path_, filename) = os.path.split(file_path)
     md5_1 = hashlib.md5()  # 创建一个md5算法对象
     with open(file_path, 'rb') as f:  # 打开一个文件，必须是'rb'模式打开
         while 1:

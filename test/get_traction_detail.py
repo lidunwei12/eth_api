@@ -5,5 +5,5 @@ from src.api_eth import Eth
 from config import Config
 
 eth = Eth("http://" + Config.ip + ":" + Config.port)
-detail = eth.get_traction_detail('0xeb445a55c200f3c722cd908cd87f0b224e52d1f08cfadd1a78f0ccfda403c103')
+detail = eth.get_traction_detail('0x696a94eaae03680dbade435c0fd49a0f8077097dd4055f683c44b98cc87f0239')
 print(detail)

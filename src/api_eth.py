@@ -214,4 +214,73 @@ class Eth():
                 return {"error": "unlock account fail"}
         else:
             return {'error': 'address not in ETH'}
-# {'greet_result': '1234', 'tx_hash': HexBytes('0xeb445a55c200f3c722cd908cd87f0b224e52d1f08cfadd1a78f0ccfda403c103')}
+
+    def use_contract_upload(self, abi_location, contract_address, address, password, data_input):
+        """
+        基于https://web3py.readthedocs.io/en/stable/contracts.html提供的智能合约来测试
+        :param abi_location: 智能合约abi.json文件路径
+        :param contract_address:智能合约地址
+        :param address:账户
+        :param password:密码
+        :param data_input:用户提交的字符串
+        :return:结果（成功返回交易地址，及结果）
+        """
+        w3 = Web3(HTTPProvider(self.url))
+        with open(abi_location, 'r') as abi_definition:
+            abi = abi_definition.read()
+        abi = abi.replace('\'', '\"')
+        abi = json.loads(abi)
+        all_account = w3.eth.accounts
+        all_account_ = [str(i).upper() for i in all_account]
+        if str(address).upper() in all_account_:
+            w3.eth.defaultAccount = w3.eth.accounts[all_account_.index(str(address).upper())]
+            result = post_method(self.url, 'personal_unlockAccount', [address, password])
+            if 'result' in result:
+                contract = w3.eth.contract(
+                    address=contract_address,
+                    abi=abi)
+                # # update the greeting
+                tx_hash = contract.functions.upload(data_input['id'], data_input['name'],
+                                                    data_input['file_hash']).transact()
+                w3.eth.waitForTransactionReceipt(tx_hash)
+                contract_result = contract.functions.upload(data_input['id'], data_input['name'],
+                                                            data_input['file_hash']).call()
+                return {'load_tx_hash': tx_hash, 'contract_result': contract_result}
+
+            else:
+                return {"error": "unlock account fail"}
+        else:
+            return {'error': 'address not in ETH'}
+
+    def use_contract_download(self, abi_location, contract_address, address, password, data_input):
+        """
+        基于https://web3py.readthedocs.io/en/stable/contracts.html提供的智能合约来测试
+        :param abi_location: 智能合约abi.json文件路径
+        :param contract_address:智能合约地址
+        :param address:账户
+        :param password:密码
+        :param data_input:用户提交的字符串
+        :return:结果（成功返回交易地址，及结果）
+        """
+        w3 = Web3(HTTPProvider(self.url))
+        with open(abi_location, 'r') as abi_definition:
+            abi = abi_definition.read()
+        abi = abi.replace('\'', '\"')
+        abi = json.loads(abi)
+        all_account = w3.eth.accounts
+        all_account_ = [str(i).upper() for i in all_account]
+        if str(address).upper() in all_account_:
+            w3.eth.defaultAccount = w3.eth.accounts[all_account_.index(str(address).upper())]
+            result = post_method(self.url, 'personal_unlockAccount', [address, password])
+            if 'result' in result:
+                contract = w3.eth.contract(
+                    address=contract_address,
+                    abi=abi)
+                tx_hash = contract.functions.download(data_input).transact()
+                w3.eth.waitForTransactionReceipt(tx_hash)
+                contract_result = contract.functions.download(data_input).call()
+                return {'download_tx_hash': tx_hash, 'contract_result': contract_result}
+            else:
+                return {"error": "unlock account fail"}
+        else:
+            return {'error': 'address not in ETH'}
