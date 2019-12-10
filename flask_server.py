@@ -1,342 +1,69 @@
-false = 1
-true = 2
-a1 = [
-    {
-        "constant": false,
-        "inputs": [],
-        "name": "Datamodel",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "name": "_key",
-                "type": "bytes32"
-            },
-            {
-                "name": "timestamp",
-                "type": "uint256"
-            },
-            {
-                "name": "sender",
-                "type": "address"
-            },
-            {
-                "name": "version",
-                "type": "uint256"
-            },
-            {
-                "name": "hash",
-                "type": "bytes32"
-            }
-        ],
-        "name": "setData",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "name": "allowedMap",
-        "outputs": [
-            {
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "name": "_key",
-                "type": "bytes32"
-            },
-            {
-                "name": "extend",
-                "type": "bytes1[512]"
-            }
-        ],
-        "name": "setExtend",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "name": "allowedArray",
-        "outputs": [
-            {
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": true,
-        "inputs": [
-            {
-                "name": "_key",
-                "type": "bytes32"
-            }
-        ],
-        "name": "getData",
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "address"
-            },
-            {
-                "name": "",
-                "type": "uint256"
-            },
-            {
-                "name": "",
-                "type": "bytes32"
-            },
-            {
-                "name": "",
-                "type": "bytes1[512]"
-            }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "name": "_address",
-                "type": "address"
-            }
-        ],
-        "name": "denyAccess",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "constant": false,
-        "inputs": [
-            {
-                "name": "_address",
-                "type": "address"
-            }
-        ],
-        "name": "allowAccess",
-        "outputs": [],
-        "payable": false,
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "name": "_handler",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "_address",
-                "type": "address"
-            }
-        ],
-        "name": "AddressAllowed",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "name": "_handler",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "_address",
-                "type": "address"
-            }
-        ],
-        "name": "AddressDenied",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "_handler",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "timestamp",
-                "type": "uint256"
-            },
-            {
-                "indexed": true,
-                "name": "sender",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "version",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "hash",
-                "type": "bytes32"
-            }
-        ],
-        "name": "DataSaved",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "_handler",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "extend",
-                "type": "bytes1[512]"
-            }
-        ],
-        "name": "ExtendSaved",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": true,
-                "name": "_handler",
-                "type": "address"
-            },
-            {
-                "indexed": false,
-                "name": "version",
-                "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "name": "extend",
-                "type": "bytes1[512]"
-            }
-        ],
-        "name": "ExtendNotSave",
-        "type": "event"
-    }
-]
-a2 =[
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "a",
-				"type": "uint256"
-			},
-			{
-				"name": "b",
-				"type": "uint256"
-			}
-		],
-		"name": "multiply",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	}
-]
-a2 =[
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_greeting",
-				"type": "string"
-			}
-		],
-		"name": "setGreeting",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "greet",
-		"outputs": [
-			{
-				"name": "",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "greeting",
-		"outputs": [
-			{
-				"name": "",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	}
-]
+"""
+flask后端服务
+"""
+from flask import Flask, request
+from flask_cors import *
+import os
+from werkzeug import secure_filename
+from config import Config
+from log_file import logger as logging
+import base64
+
+app = Flask(__name__)
+CORS(app, supports_credentials=True)
+
+
+def allowed_file(filename, exam_file):
+    """
+    验证上传的文件名是否符合要求，文件名必须带点并且符合允许上传的文件类型要求，两者都满足则返回 true
+    :param filename:文件名字
+    :param exam_file: 后缀检验
+    :return:true false
+    """
+    return '.' in filename and filename.rsplit('.', 1)[1] in exam_file
+
+
+@app.route("/image", methods=['POST'])
+def zip_server():
+    """
+    png压缩服务，上传png文件，返回压缩后的png文件
+    :return: jsonj结果
+    """
+    try:
+        file = request.files['img']  # 获取上传的文件
+        if file and allowed_file(file.filename, Config.PNG_ALLOWED_EXTENSIONS):  # 如果文件存在并且符合要求则为 true
+            logging.info('get_task' + str(file.filename))
+            filename = secure_filename(file.filename)  # 获取上传文件的文件名
+            file.save(os.path.join(Config.image_save_path, filename))  # 保存文件
+            logging.info('result success')
+            return result
+        else:
+            logging.info('result' + 'no task')
+            return {'status': 'no task'}
+    except Exception as e:
+        logging.exception('%s', e)
+        return {'status': 1, 'error': e}
+
+
+@app.route("/pdf", methods=['POST'])
+def pdf_server(status, name):
+    """
+    html转pdf服务，提供html文件、网址、字符串，返回压缩后的pdf文件
+    :return: jsonj结果
+    """
+    try:
+        logging.info('get_task')
+        if status == 'file':
+            html_data = base64.b64decode(name)
+            with open(Config.html_file, 'wb') as f:
+                f.write(html_data)
+        result = html_pdf_main(status, name)
+        logging.info('result success')
+        return result
+    except Exception as e:
+        logging.exception('%s', e)
+        return {'status': 1, 'error': e}
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=Config.port, debug=True)

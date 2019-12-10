@@ -3,87 +3,63 @@
 		"constant": false,
 		"inputs": [
 			{
-				"name": "r",
-				"type": "bytes32"
+				"name": "name",
+				"type": "string"
 			},
 			{
-				"name": "s",
-				"type": "bytes32"
-			},
-			{
-				"name": "v1",
-				"type": "bytes1"
+				"name": "imageLink",
+				"type": "string"
 			}
 		],
-		"name": "ecrecoverDecode",
+		"name": "upload",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "download",
 		"outputs": [
 			{
-				"name": "addr",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
 				"type": "address"
 			}
 		],
 		"payable": false,
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "source",
-				"type": "bytes"
-			}
-		],
-		"name": "bytesToBytes32",
-		"outputs": [
-			{
-				"name": "result",
-				"type": "bytes32"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
+		"constant": true,
 		"inputs": [],
-		"name": "decode",
+		"name": "dataIndex",
 		"outputs": [
 			{
 				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "data",
-				"type": "bytes"
-			},
-			{
-				"name": "start",
-				"type": "uint256"
-			},
-			{
-				"name": "len",
 				"type": "uint256"
 			}
 		],
-		"name": "slice",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bytes"
-			}
-		],
 		"payable": false,
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
 		"type": "function"
 	}
 ]
